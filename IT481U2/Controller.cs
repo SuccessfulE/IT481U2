@@ -6,6 +6,8 @@ namespace IT481U2
     {
         string connectionString;
         SqlConnection cnn = null;
+
+        //Creating connection to SQL Database
         public Controller() 
         {
             connectionString = "Server = desktop-hp19nsb\\SQLEXPRESS;" +
@@ -14,18 +16,22 @@ namespace IT481U2
                                         "User Instance = false;" +
                                         "Connection timeout = 30";
         }
-
+        
         public Controller(string conn)
         {
             connectionString = conn;
         }
 
+        //Get the customer count from the SQL database
         public string getCustomerCount()
         {
             Int32 count = 0;
 
+            //Create new SQL connection
             cnn = new SqlConnection(connectionString);
             cnn.Open();
+
+            //Create Query
             string countQuery = "select count(*) from customers;";
             SqlCommand cmd = new SqlCommand(countQuery, cnn);
 
@@ -40,13 +46,17 @@ namespace IT481U2
             return count.ToString();
         }
 
+        //Get the company names from the SQL database
         public string getCompanyNames()
         {
             string names = "";
             SqlDataReader dataReader;
 
+            //Create new SQL connection
             cnn = new SqlConnection(connectionString);
             cnn.Open();
+
+            //Create query
             string countQuery = "select companyname from customers;";
             SqlCommand cmd = new SqlCommand(countQuery, cnn);
             dataReader = cmd.ExecuteReader();
